@@ -2,12 +2,25 @@ package Vista;
 
 import java.util.Scanner;
 
+/**
+ * Clase para gestionar la vista de la aplicación
+ * y los mensajes de entrada/salida usuario
+ *
+ * @author Jorge Sobrino
+ * @version 1.0
+ */
 public class Vista {
-
+    /**
+     * Scanner para gestionar la interacción
+     */
     private final Scanner scanner;
 
-    public Vista() {scanner = new Scanner(System.in);}
-
+    /**
+     * Constructor de la clase Vista.
+     */
+    public Vista() {
+        scanner = new Scanner(System.in);
+    }
 
     /**
      * Método para mostrar el menú principal de la aplicación
@@ -87,6 +100,7 @@ public class Vista {
 
     /**
      * Método para mostrar un mensaje en la consola y salto de carro
+     *
      * @param mensaje cadena con el texto a mostrar
      */
     public void mostrarMensaje(String mensaje) {
@@ -95,6 +109,7 @@ public class Vista {
 
     /**
      * Método para mostrar un mensaje en la consola y solicitar una cadena de texto
+     *
      * @param mensaje cadena con el texto a mostrar
      * @return una cadena (String) con los datos introducidos por la consola hasta pulsar ENTER
      */
@@ -105,6 +120,7 @@ public class Vista {
 
     /**
      * Método para mostrar un mensaje en la consola y solicitar un entero
+     *
      * @param mensaje cadena con el texto a mostrar
      * @return un número entero (int) con los datos introducidos por la consola hasta pulsar ENTER
      */
@@ -122,6 +138,7 @@ public class Vista {
 
     /**
      * Método para mostrar un mensaje en la consola y solicitar un doble
+     *
      * @param mensaje cadena con el texto a mostrar
      * @return un número decimal (double) con los datos introducidos por la consola hasta pulsar ENTER
      */
@@ -142,13 +159,6 @@ public class Vista {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
-
-
-
-
-
-
 
 
 }
