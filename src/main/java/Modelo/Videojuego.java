@@ -1,16 +1,16 @@
 package Modelo;
 
-public class Videojuegos {
+public class Videojuego {
     private int id;
     private String titulo;
     private String genero;
     private String plataforma;
     private int copias_disponibles;
 
-    public Videojuegos() {
+    public Videojuego() {
     }
 
-    public Videojuegos(int id, String titulo, String genero, String plataforma, int copias_disponibles) {
+    public Videojuego(int id, String titulo, String genero, String plataforma, int copias_disponibles) {
         this.id = id;
         this.titulo = titulo;
         this.genero = genero;
@@ -61,12 +61,15 @@ public class Videojuegos {
 
     @Override
     public String toString() {
-        return "Videojuegos{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", genero='" + genero + '\'' +
-                ", plataforma='" + plataforma + '\'' +
-                ", copias_disponibles=" + copias_disponibles +
-                '}';
+        return "╔════════════════════════════════╗\n" +
+                "║         🎮 Videojuego 🎮      ║\n" +
+                "╠════════════════════════════════╣\n" +
+                "║ 📜 ID del Juego: " + id + "             \n" +
+                "║ 🎮 Título: '" + titulo + "'             \n" +
+                "║ 🗂 Género: '" + genero + "'              \n" +
+                "║ 🌐 Plataforma: '" + plataforma + "'      \n" +
+                "║ 💾 Copias Disponibles: " + copias_disponibles + "        \n" +
+                "╚════════════════════════════════╝\n";
     }
+
 }
