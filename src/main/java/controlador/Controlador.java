@@ -1,8 +1,7 @@
 package controlador;
 
-import DAO.ClienteDAOImpl;
-import DAO.VideojuegosDAO;
-import DAO.VideojuegosDAOImpl;
+import DAO.*;
+import Modelo.Alquiler;
 import Modelo.Cliente;
 import Modelo.Videojuego;
 import Vista.Vista;
@@ -34,6 +33,7 @@ public class Controlador {
      *
      * @param vista la vista que va a gestionar el controlador para mostrar e interacturar con los usuarios
      */
+    Date fecha = Date.valueOf(LocalDate.now());
 
     public Controlador(Vista vista) {
         this.vista = vista;
@@ -186,19 +186,46 @@ public class Controlador {
         }
     }
 
+    private Alquiler datosAlquiler(){
+        Alquiler a = new Alquiler();
+
+
+        int clienteID = vista.obtenerEntero("Introduce o id do Cliente: ");
+        int videojuegoID = vista.obtenerEntero("Introduce o id do Videojuego: ");
+
+        a.setCliente_id(clienteID);
+        a.setVideojuego_id(videojuegoID);
+        a.setFecha_alquiler(fecha);
+
+
+        return a;
+    }
+
     /**
      * Método para mostrar y gestionar el submenú de Alquileres
      */
-    private void gestionarAlquileres() {
+    private void gestionarAlquileres() throws SQLException {
+        AlquilerDAO alquilerDAO = new AlquilerDAOImpl();
         boolean volver = false;
         while (!volver) {
             vista.mostrarMenuAlquileres();
             int opcion = vista.obtenerEntero("Opción");
 
             switch (opcion) {
-                case 1 -> vista.mostrarMensaje("Opción para registrar un nuevo alquiler seleccionada.");
+                case 1 -> {
+                    alquilerDAO.registrarAlquiler(datosAlquiler());
+                }
                 case 2 -> vista.mostrarMensaje("Opción para consultar un alquiler por ID seleccionada.");
-                case 3 -> vista.mostrarMensaje("Opción para listar todos los alquileres seleccionada.");
+                case 3 -> {
+                    List<Alquiler> alquileres = alquilerDAO.obterTodosAlquileres();
+                    if (alquileres.isEmpty()) {
+                        vista.mostrarMensaje("No se encontraron alquileres.");
+                    } else {
+                        for (Alquiler a : alquileres) {
+                            System.out.println(a);
+                        }
+                    }
+                }
                 case 4 -> vista.mostrarMensaje("Opción para actualizar un alquiler seleccionada.");
                 case 5 -> vista.mostrarMensaje("Opción para eliminar un alquiler seleccionada.");
                 case 0 -> volver = true;
