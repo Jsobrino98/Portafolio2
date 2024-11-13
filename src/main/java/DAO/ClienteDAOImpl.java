@@ -14,16 +14,14 @@ public class ClienteDAOImpl implements ClienteDAO{
     public int agregarCliente(Cliente c) throws SQLException {
         Date fecha = Date.valueOf(LocalDate.now());
         int respuesta = 0;
-        String sql = "INSERT INTO clientes(id,nombre,email,fecha_registro)" +
-                "VALUES(?,?,?,?)";
+        String sql = "INSERT INTO clientes(nombre,email,fecha_registro)" +
+                "VALUES(?,?,?)";
         try (Connection conexion = ConexionDB.getConexion()) {
             PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            Cliente cliente = new Cliente();
 
-            pst.setInt(1, cliente.getId());
-            pst.setString(2, cliente.getNombre());
-            pst.setString(3, cliente.getEmail());
-            pst.setDate(4, fecha);
+            pst.setString(1, c.getNombre());
+            pst.setString(2, c.getEmail());
+            pst.setDate(3, fecha);
 
             pst.executeUpdate();
 
@@ -67,7 +65,7 @@ public class ClienteDAOImpl implements ClienteDAO{
     public List<Cliente> obtenerTodosClientes() throws SQLException {
 
         List<Cliente> listado = new ArrayList<>();
-        String sql = "SELECT * FROM cliente";
+        String sql = "SELECT * FROM clientes";
 
         //Decirle por sql que devuelva todos
         try (Connection conexion = ConexionDB.getConexion()) {
@@ -112,10 +110,12 @@ public class ClienteDAOImpl implements ClienteDAO{
     }
 
     @Override
-    public String actualizarClientePorId(Cliente cliente) throws SQLException {
-        String sql = "UPDATE clientes SET nombre=?, email=?, fechaRegsitro=? WHERE id=?";
+    public String actualizarClientePorId(int id, Cliente cliente) throws SQLException {
+        String sql = "UPDATE clientes SET nombre=?, email=?, fecha_Registro=? WHERE id=?";
         String respuesta;
 
+
+        // Establecer la conexión y preparar el PreparedStatement
         try (Connection conexion = ConexionDB.getConexion()) {
             PreparedStatement pst = conexion.prepareStatement(sql);
 
@@ -123,9 +123,12 @@ public class ClienteDAOImpl implements ClienteDAO{
             pst.setString(1, cliente.getNombre());
             pst.setString(2, cliente.getEmail());
             pst.setDate(3, cliente.getFecha_registro());
-            pst.setInt(5, cliente.getId());
+            pst.setInt(4, id);  // Usamos el ID que se pasa como parámetro
+
+            // Ejecutamos la actualización
 
             int filasAfectadas = pst.executeUpdate();
+
             if (filasAfectadas > 0) {
                 respuesta = "Cliente actualizado correctamente.";
             } else {
@@ -139,4 +142,5 @@ public class ClienteDAOImpl implements ClienteDAO{
 
         return respuesta;
     }
+
 }

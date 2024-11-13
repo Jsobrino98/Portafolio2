@@ -39,13 +39,13 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
     }
 
     @Override
-    public int agregarVideojuego(Videojuego videojuego) throws SQLException {
+    public int agregarVideojuego(Videojuego v) throws SQLException {
         int respuesta = 0;
         String sql = "INSERT INTO videojuegos(id,titulo,genero,plataforma,copias_disponibles)" +
                 "VALUES(?,?,?,?,?)";
         try (Connection conexion = ConexionDB.getConexion()) {
             PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            Videojuego v = new Videojuego();
+
 
             pst.setInt(1, v.getId());
             pst.setString(2, v.getTitulo());
@@ -58,6 +58,9 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
             ResultSet claves = pst.getGeneratedKeys();
             if (claves.next()) {
                 respuesta = (int) claves.getLong(1);
+                System.out.println("VideoJuego agregado correctamente!");
+            } else {
+                System.out.println("Non se pudo agregar videojuego!");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -109,11 +112,14 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         return respuesta;
     }
 
-    public String actualizarVideojuegoPorId(Videojuego videojuego) throws SQLException {
-
+    public String actualizarVideojuegoPorId(int id, Videojuego videojuego) throws SQLException {
+        // Sentencia SQL para actualizar el videojuego en la base de datos
         String sql = "UPDATE videojuegos SET titulo=?, genero=?, plataforma=?, copias_disponibles=? WHERE id=?";
         String respuesta;
 
+
+
+        // Establecer la conexión y preparar el PreparedStatement
         try (Connection conexion = ConexionDB.getConexion()) {
             PreparedStatement pst = conexion.prepareStatement(sql);
 
@@ -122,9 +128,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
             pst.setString(2, videojuego.getGenero());
             pst.setString(3, videojuego.getPlataforma());
             pst.setInt(4, videojuego.getCopias_disponibles());
-            pst.setInt(5, videojuego.getId());
+            pst.setInt(5, id);  // Usamos el ID que se pasa como parámetro
 
+            // Ejecutamos la actualización
             int filasAfectadas = pst.executeUpdate();
+
             if (filasAfectadas > 0) {
                 respuesta = "Videojuego actualizado correctamente.";
             } else {
@@ -138,6 +146,5 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
 
         return respuesta;
     }
-
 
 }

@@ -18,6 +18,6 @@ public interface VideojuegosDAO {
     Videojuego consultarVideojuegoID (int id) throws SQLException;
     List<Videojuego> obtenerTodosVideojuegos() throws SQLException;
     int eliminarVideojuegoPorId (int id) throws SQLException;
-    String actualizarVideojuegoPorId(Videojuego v) throws SQLException;
+    String actualizarVideojuegoPorId(int id, Videojuego videojuego) throws SQLException;
 
 }

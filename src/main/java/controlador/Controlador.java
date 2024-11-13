@@ -1,11 +1,15 @@
 package controlador;
 
+import DAO.ClienteDAOImpl;
 import DAO.VideojuegosDAO;
 import DAO.VideojuegosDAOImpl;
+import Modelo.Cliente;
 import Modelo.Videojuego;
 import Vista.Vista;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -58,6 +62,26 @@ public class Controlador {
             }
         }
     }
+    /**
+     * Introducir los datos de los clientes y retorno un cliente ya con esos datos
+     */
+
+    private Videojuego datosVideojuego(){
+        Videojuego v = new Videojuego();
+
+        String titulo = vista.obtenerString("Introduce titulo: ");
+        String genero = vista.obtenerString("Introduce género: ");
+        String plataforma = vista.obtenerString("Introduce plataforma: ");
+        int copias = vista.obtenerEntero("Introduce copias disponibles: ");
+
+        v.setTitulo(titulo);
+        v.setGenero(genero);
+        v.setPlataforma(plataforma);
+        v.setCopias_disponibles(copias);
+
+        return v;
+    }
+
 
     /**
      * Método para mostrar y gestionar el submenú de Videojuegos
@@ -70,14 +94,7 @@ public class Controlador {
             int opcion = vista.obtenerEntero("Opción");
 
             switch (opcion) {
-                case 1 -> {
-                    videojuegosDAO.agregarVideojuego(new Videojuego(
-                            vista.obtenerEntero("Introduce o Id: "),
-                            vista.obtenerString("Introduce o titulo: "),
-                            vista.obtenerString("Introduce o genero:"),
-                            vista.obtenerString("Introduce a plataforma:"),
-                            vista.obtenerEntero("Introduce as copias disponibles: ")
-                    ));
+                case 1 -> {videojuegosDAO.agregarVideojuego(datosVideojuego());
                 }
                 case 2 -> {
                     Videojuego v = videojuegosDAO.consultarVideojuegoID(vista.obtenerEntero("Introduce ID"));
@@ -94,13 +111,9 @@ public class Controlador {
                     }
                 }
                 case 4 -> {
-                    videojuegosDAO.actualizarVideojuegoPorId(new Videojuego(
-                            vista.obtenerEntero("(Actualizar) Introduce o ID: "),
-                            vista.obtenerString("Introduce el nuevo titulo: "),
-                            vista.obtenerString("Introduce el nuevo genero: "),
-                            vista.obtenerString("Introduce la nueva plataforma: "),
-                            vista.obtenerEntero("Introduce las copias disponibles: ")
-                    ));
+                    videojuegosDAO.actualizarVideojuegoPorId(
+                            vista.obtenerEntero("(Actualizar) Introduce ID: "),
+                            datosVideojuego());
                 }
                 case 5 -> {
                     videojuegosDAO.eliminarVideojuegoPorId(vista.obtenerEntero("(Eliminar) Introduce ID: "));
@@ -112,20 +125,61 @@ public class Controlador {
     }
 
     /**
+     * Introducir los datos de los clientes y retorno un cliente ya con esos datos
+     */
+
+    private Cliente datosClientes(){
+        Cliente c = new Cliente();
+
+        String nombre = vista.obtenerString("Introduce nombre: ");
+        String email = vista.obtenerString("Introduce email: ");
+        Date fecha = Date.valueOf(LocalDate.now());
+
+        c.setNombre(nombre);
+        c.setEmail(email);
+        c.setFecha_registro(fecha);
+
+        return c;
+    }
+
+
+    /**
      * Método para mostrar y gestionar el submenú de Clientes
      */
-    private void gestionarClientes() {
+    private void gestionarClientes() throws SQLException {
+        Date fecha = Date.valueOf(LocalDate.now());
+        ClienteDAOImpl clienteDAO = new ClienteDAOImpl();
         boolean volver = false;
         while (!volver) {
             vista.mostrarMenuClientes();
             int opcion = vista.obtenerEntero("Opción");
 
             switch (opcion) {
-                case 1 -> vista.mostrarMensaje("Opción para registrar un nuevo cliente seleccionada.");
-                case 2 -> vista.mostrarMensaje("Opción para consultar un cliente por ID seleccionada.");
-                case 3 -> vista.mostrarMensaje("Opción para listar todos los clientes seleccionada.");
-                case 4 -> vista.mostrarMensaje("Opción para actualizar un cliente seleccionada.");
-                case 5 -> vista.mostrarMensaje("Opción para eliminar un cliente seleccionada.");
+                case 1 -> {
+                    clienteDAO.agregarCliente(datosClientes());
+                }
+                case 2 -> {
+                    Cliente cliente = clienteDAO.consultarClienteID(vista.obtenerEntero("Introduce ID"));
+                    System.out.println(cliente);
+                }
+                case 3 -> {
+                    List<Cliente> clientes = clienteDAO.obtenerTodosClientes();
+                    if (clientes.isEmpty()) {
+                        vista.mostrarMensaje("No se encontraron clientes.");
+                    } else {
+                        for (Cliente c : clientes) {
+                            System.out.println(c);
+                        }
+                    }
+                }
+                case 4 -> {
+                    clienteDAO.actualizarClientePorId(
+                            vista.obtenerEntero("(Actualizar) Introduce ID: "),
+                            datosClientes());
+                }
+                case 5 -> {
+                    clienteDAO.eliminarClientePorId(vista.obtenerEntero("(Eliminar) Introduce ID: "));
+                }
                 case 0 -> volver = true;
                 default -> vista.mostrarMensaje("Opción no válida. Intentar de nuevo.");
             }

@@ -52,11 +52,13 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", fecha_registro=" + fecha_registro +
-                '}';
+        return "🌟✨ Cliente ✨🌟\n" +
+                "===========================\n" +
+                "🆔 ID: " + id + "\n" +
+                "📛 Nombre: " + nombre + "\n" +
+                "📧 Email: " + email + "\n" +
+                "📅 Fecha de Registro: " + fecha_registro + "\n" +
+                "===========================\n";
     }
+
 }
