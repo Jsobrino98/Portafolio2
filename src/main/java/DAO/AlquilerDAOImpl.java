@@ -80,13 +80,87 @@ public class AlquilerDAOImpl implements AlquilerDAO{
     }
 
     @Override
-    public String actualizarAlquiler(int idAlquiler) throws SQLException {
-        return "";
+    public String actualizarAlquilerDevolucion(int idAlquiler, Date devolucion) throws SQLException {
+        String sql = "UPDATE alquileres SET fecha_devolucion=? WHERE id=?";
+        String respuesta;
+
+
+        // Establecer la conexión y preparar el PreparedStatement
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+
+            // Establecemos los valores en el PreparedStatement en el orden correcto
+            pst.setDate(1, devolucion);
+            pst.setInt(2, idAlquiler);
+
+            // Ejecutamos la actualización
+            int filasAfectadas = pst.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                respuesta = "Alquiler actualizado correctamente.";
+            } else {
+                respuesta = "No se encontró un Alquiler con el ID especificado.";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            respuesta = "Error al actualizar el Alquiler: " + e.getMessage();
+        }
+
+        return respuesta;
     }
 
     @Override
     public int eliminarAlquiler(int id) throws SQLException {
-        return 0;
+        String sql = "DELETE FROM alquileres WHERE id=?";
+        int respuesta = 0;
+
+        // Establecer la conexión y preparar el PreparedStatement
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+
+            // Establecemos los valores en el PreparedStatement en el orden correcto
+            pst.setInt(1, id);;
+
+            // Ejecutamos la actualización
+            respuesta = pst.executeUpdate();
+
+            if (respuesta != 0) {
+                System.out.println("Alquiler eliminado correctamente ");
+            } else {
+                System.out.println("No se pudo eliminar el alquiler");;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return respuesta;
+    }
+
+    @Override
+    public Alquiler consultarAlquilerPorID(int id) throws SQLException {
+        String sql = "SELECT * FROM alquileres WHERE id=?";
+        Alquiler a = null;
+
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                a = new Alquiler(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getDate(4),
+                        rs.getDate(5)
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return a;
     }
 
 

@@ -13,6 +13,11 @@ public class Alquiler {
     public Alquiler() {
     }
 
+    public Alquiler(int id, Date fecha_devolucion) {
+        this.id = id;
+        this.fecha_devolucion = fecha_devolucion;
+    }
+
     public Alquiler(int id, int cliente_id, int videojuego_id, Date fecha_alquiler, Date fecha_devolucion) {
         this.id = id;
         this.cliente_id = cliente_id;
@@ -65,33 +70,12 @@ public class Alquiler {
 
     @Override
     public String toString() {
-        return "¡Alquiler!\n" +
-                "============================================\n" +
-                "🌀 Alquiler # " + id + "\n" +
-                "🎮 Videojuego: " + obtenerNombreVideojuego() + "\n" +
-                "👤 Cliente: " + obtenerNombreCliente() + "\n" +
-                "📅 Fecha de Alquiler: " + formatoFecha(fecha_alquiler) + "\n" +
-                "📅 Fecha de Devolución: " + formatoFecha(fecha_devolucion) + "\n" +
-                "============================================\n" +
-                "¡Que el juego comience y la aventura sea épica! 🎮✨";
+        return "Alquiler{" +
+                "id=" + id +
+                ", cliente_id=" + cliente_id +
+                ", videojuego_id=" + videojuego_id +
+                ", fecha_alquiler=" + fecha_alquiler +
+                ", fecha_devolucion=" + fecha_devolucion +
+                '}';
     }
-
-    // Método auxiliar para formatear la fecha de manera más legible
-    private String formatoFecha(java.sql.Date fecha) {
-        java.text.SimpleDateFormat formato = new java.text.SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
-        return formato.format(fecha);
-    }
-
-    // Simulación de obtención del nombre del videojuego
-    private String obtenerNombreVideojuego() {
-        // Aquí deberías implementar la lógica para obtener el nombre del videojuego
-        return "Mundo Mágico: La Aventura Final";
-    }
-
-    // Simulación de obtención del nombre del cliente
-    private String obtenerNombreCliente() {
-        // Aquí deberías implementar la lógica para obtener el nombre del cliente
-        return "Sir Arthur el Valiente";
-    }
-
 }

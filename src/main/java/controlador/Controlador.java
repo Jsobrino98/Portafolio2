@@ -62,11 +62,12 @@ public class Controlador {
             }
         }
     }
+
     /**
      * Introducir los datos de los clientes y retorno un cliente ya con esos datos
      */
 
-    private Videojuego datosVideojuego(){
+    private Videojuego datosVideojuego() {
         Videojuego v = new Videojuego();
 
         String titulo = vista.obtenerString("Introduce titulo: ");
@@ -94,7 +95,8 @@ public class Controlador {
             int opcion = vista.obtenerEntero("Opción");
 
             switch (opcion) {
-                case 1 -> {videojuegosDAO.agregarVideojuego(datosVideojuego());
+                case 1 -> {
+                    videojuegosDAO.agregarVideojuego(datosVideojuego());
                 }
                 case 2 -> {
                     Videojuego v = videojuegosDAO.consultarVideojuegoID(vista.obtenerEntero("Introduce ID"));
@@ -128,7 +130,7 @@ public class Controlador {
      * Introducir los datos de los clientes y retorno un cliente ya con esos datos
      */
 
-    private Cliente datosClientes(){
+    private Cliente datosClientes() {
         Cliente c = new Cliente();
 
         String nombre = vista.obtenerString("Introduce nombre: ");
@@ -186,7 +188,7 @@ public class Controlador {
         }
     }
 
-    private Alquiler datosAlquiler(){
+    private Alquiler datosAlquiler() {
         Alquiler a = new Alquiler();
 
 
@@ -200,6 +202,7 @@ public class Controlador {
 
         return a;
     }
+
 
     /**
      * Método para mostrar y gestionar el submenú de Alquileres
@@ -215,7 +218,10 @@ public class Controlador {
                 case 1 -> {
                     alquilerDAO.registrarAlquiler(datosAlquiler());
                 }
-                case 2 -> vista.mostrarMensaje("Opción para consultar un alquiler por ID seleccionada.");
+                case 2 -> {
+                    Alquiler a = alquilerDAO.consultarAlquilerPorID(vista.obtenerEntero("(Consultar) Introduce o ID do alquiler: "));
+                    System.out.println(a);
+                }
                 case 3 -> {
                     List<Alquiler> alquileres = alquilerDAO.obterTodosAlquileres();
                     if (alquileres.isEmpty()) {
@@ -226,13 +232,20 @@ public class Controlador {
                         }
                     }
                 }
-                case 4 -> vista.mostrarMensaje("Opción para actualizar un alquiler seleccionada.");
-                case 5 -> vista.mostrarMensaje("Opción para eliminar un alquiler seleccionada.");
+                case 4 -> {
+                    alquilerDAO.actualizarAlquilerDevolucion(
+                            vista.obtenerEntero("(Actualizar) Introduce el ID del alquiler: "), obtenerDiaDevolucion()
+                    );
+                }
+                case 5 ->{
+                    alquilerDAO.eliminarAlquiler(vista.obtenerEntero("(Eliminar) Introduce el ID del alquiler: "));
+                }
                 case 0 -> volver = true;
                 default -> vista.mostrarMensaje("Opción no válida. Intentar de nuevo.");
             }
         }
     }
+
 
     /**
      * Método para mostrar y gestionar el submenú de Informes
@@ -255,5 +268,16 @@ public class Controlador {
                 default -> vista.mostrarMensaje("Opción no válida. Intentar de nuevo.");
             }
         }
+    }
+
+    /**
+     * Metodo para obtener fecha de devolucion para
+     * actualizar alquiler
+     */
+    public Date obtenerDiaDevolucion() {
+
+        String dia = vista.obtenerString("Introduce Dia devolucion:"), mes = vista.obtenerString("Introduce Mes: "), año = vista.obtenerString("Introduce Año:");
+        Date diaDevolucion = Date.valueOf(año + "-" + mes + "-" + dia);
+        return diaDevolucion;
     }
 }
