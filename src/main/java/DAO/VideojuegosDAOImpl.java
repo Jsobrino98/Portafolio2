@@ -1,6 +1,7 @@
 package DAO;
 
 import ConexionDB.ConexionDB;
+import Modelo.Cliente;
 import Modelo.Videojuego;
 
 import java.sql.*;
@@ -102,7 +103,7 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
             PreparedStatement pst = conexion.prepareStatement(sql);
             pst.setInt(1, id);
             respuesta = pst.executeUpdate();
-            if (respuesta!=0){
+            if (respuesta != 0) {
                 System.out.println("Eliminado con exito!");
             }
 
@@ -116,7 +117,6 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         // Sentencia SQL para actualizar el videojuego en la base de datos
         String sql = "UPDATE videojuegos SET titulo=?, genero=?, plataforma=?, copias_disponibles=? WHERE id=?";
         String respuesta;
-
 
 
         // Establecer la conexión y preparar el PreparedStatement
@@ -146,5 +146,127 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
 
         return respuesta;
     }
+
+    /**
+     * Metodo para listar los videojuegos con copias disponibles
+     * Devuelve una lista de videojuegos
+     */
+    public List<Videojuego> videojuegosDisponibles() {
+        List<Videojuego> listado = new ArrayList<>();
+        String sql = "SELECT * FROM videojuegos WHERE copias_disponibles > 0";
+
+        //Decirle por sql que devuelva todos
+        try (Connection conexion = ConexionDB.getConexion()) {
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Videojuego videojuego = new Videojuego(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                );
+
+                listado.add(videojuego);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return listado;
+    }
+
+    public List<Videojuego> buscarVideoJuegoNombrePlataforma(String nombre) {
+        List<Videojuego> listado = new ArrayList<>();
+        String sql = "SELECT * FROM videojuegos WHERE titulo like ?";
+
+        Videojuego v = null;
+
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+            pst.setString(1, nombre);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                v = new Videojuego(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                );
+            }
+
+            listado.add(v);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listado;
+    }
+
+    public List<Videojuego> videojuegosPorCliente(int idCliente) {
+        List<Videojuego> listado = new ArrayList<>();
+        String sql = "SELECT v.id, v.titulo, v.genero, v.plataforma, v.copias_disponibles " +
+                "FROM videojuegos v " +
+                "JOIN alquileres a ON v.id = a.videojuego_id " +
+                "WHERE a.cliente_id = ?";
+
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+            pst.setInt(1, idCliente);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Videojuego v = new Videojuego(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("genero"),
+                        rs.getString("plataforma"),
+                        rs.getInt("copias_disponibles")
+                );
+                listado.add(v);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listado;
+    }
+    public List<Videojuego> videojuegosPopularesPlataforma(String plataforma) {
+        List<Videojuego> listado = new ArrayList<>();
+        String sql = "SELECT v.id, v.titulo, v.genero, v.plataforma, v.copias_disponibles, COUNT(a.videojuego_id) AS num_alquileres " +
+                "FROM videojuegos v " +
+                "JOIN alquileres a ON v.id = a.videojuego_id " +
+                "WHERE v.plataforma LIKE ? " +
+                "GROUP BY v.id, v.titulo, v.genero, v.plataforma, v.copias_disponibles " +
+                "ORDER BY num_alquileres DESC";
+
+        try (Connection conexion = ConexionDB.getConexion()) {
+            PreparedStatement pst = conexion.prepareStatement(sql);
+            pst.setString(1, plataforma);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Videojuego v = new Videojuego(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("genero"),
+                        rs.getString("plataforma"),
+                        rs.getInt("copias_disponibles")
+                );
+                listado.add(v);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listado;
+    }
+
+
+
 
 }

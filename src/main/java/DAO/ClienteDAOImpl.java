@@ -63,7 +63,6 @@ public class ClienteDAOImpl implements ClienteDAO{
 
     @Override
     public List<Cliente> obtenerTodosClientes() throws SQLException {
-
         List<Cliente> listado = new ArrayList<>();
         String sql = "SELECT * FROM clientes";
 
@@ -82,7 +81,6 @@ public class ClienteDAOImpl implements ClienteDAO{
 
                 listado.add(cliente);
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -251,17 +251,54 @@ public class Controlador {
      * Método para mostrar y gestionar el submenú de Informes
      */
     private void mostrarInformes() {
+        VideojuegosDAOImpl videojuegosDAO = new VideojuegosDAOImpl();
         boolean volver = false;
         while (!volver) {
             vista.mostrarMenuInformes();
             int opcion = vista.obtenerEntero("Opción");
             switch (opcion) {
-                case 1 -> vista.mostrarMensaje("Opción para listar videojuegos más alquilados seleccionada.");
-                case 2 -> vista.mostrarMensaje("Opción para buscar videojuegos por título o plataforma seleccionada.");
+                case 1 -> {
+                        List<Videojuego> videojuegos = videojuegosDAO.videojuegosDisponibles();
+                       if (videojuegos.isEmpty()){
+                           vista.mostrarMensaje("No hay videojuegos disponibles");
+                       } else {
+                           for (Videojuego v: videojuegos){
+                               System.out.println(v);
+                           }
+                       }
+
+                }
+                case 2 -> {
+                    List<Videojuego> videojuegos = videojuegosDAO.buscarVideoJuegoNombrePlataforma(vista.obtenerString("Escribe nombre del Videojuego:"));
+                    if (videojuegos.isEmpty()){
+                        vista.mostrarMensaje("No hay videojuegos disponibles");
+                    } else {
+                        for (Videojuego v: videojuegos){
+                            System.out.println(v);
+                        }
+                    }
+                }
                 case 3 -> vista.mostrarMensaje("Opción para ver clientes con más alquileres activos seleccionada.");
-                case 4 ->
-                        vista.mostrarMensaje("Opción para listar videojuegos alquilados por un cliente seleccionada.");
-                case 5 -> vista.mostrarMensaje("Opción para Listar Videojuegos Más Populares por Plataforma");
+                case 4 ->{
+                    List<Videojuego> videojuegos = videojuegosDAO.videojuegosPorCliente(vista.obtenerEntero("Introduce el ID del cliente: "));
+                    if (videojuegos.isEmpty()){
+                        vista.mostrarMensaje("No hay videojuegos disponibles");
+                    } else {
+                        for (Videojuego v: videojuegos){
+                            System.out.println(v);
+                        }
+                    }
+                }
+                case 5 -> {
+                    List<Videojuego> videojuegos = videojuegosDAO.videojuegosPopularesPlataforma(vista.obtenerString("Introduce el nombre de la plataforma: "));
+                    if (videojuegos.isEmpty()){
+                        vista.mostrarMensaje("No hay videojuegos disponibles");
+                    } else {
+                        for (Videojuego v: videojuegos){
+                            System.out.println(v);
+                        }
+                    }
+                }
                 case 6 -> vista.mostrarMensaje("Opción para Listado de Videojuegos Disponibles para Alquiler");
                 case 7 -> vista.mostrarMensaje("Opción para Historial de Alquileres de un Videojuego Específico");
                 case 0 -> volver = true;
@@ -280,4 +317,5 @@ public class Controlador {
         Date diaDevolucion = Date.valueOf(año + "-" + mes + "-" + dia);
         return diaDevolucion;
     }
+
 }

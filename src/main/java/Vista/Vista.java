@@ -86,7 +86,7 @@ public class Vista {
     public void mostrarMenuInformes() {
         mostrarMensaje("\n========= Informes y Consultas =========");
         mostrarMensaje("Seleccione una opción:");
-        mostrarMensaje("1. Listar videojuegos más alquilados");
+        mostrarMensaje("1. Listar videojuegos con copias disponibles");
         mostrarMensaje("2. Buscar videojuegos por título o plataforma");
         mostrarMensaje("3. Ver clientes con más alquileres activos");
         mostrarMensaje("4. Listar videojuegos alquilados actualmente por un cliente");
