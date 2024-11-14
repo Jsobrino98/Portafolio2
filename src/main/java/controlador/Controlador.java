@@ -269,7 +269,7 @@ public class Controlador {
 
                 }
                 case 2 -> {
-                    List<Videojuego> videojuegos = videojuegosDAO.buscarVideoJuegoNombrePlataforma(vista.obtenerString("Escribe nombre del Videojuego:"));
+                    List<Videojuego> videojuegos = videojuegosDAO.buscarVideoJuegoNombre(vista.obtenerString("Escribe nombre del Videojuego:"));
                     if (videojuegos.isEmpty()){
                         vista.mostrarMensaje("No hay videojuegos disponibles");
                     } else {

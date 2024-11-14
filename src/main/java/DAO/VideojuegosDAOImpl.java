@@ -10,6 +10,10 @@ import java.util.List;
 
 public class VideojuegosDAOImpl implements VideojuegosDAO {
 
+    /**
+     * Metodo para listar todos los videojuegos
+     * Devuelve una lista de videojuegos
+     */
     public List<Videojuego> obtenerTodosVideojuegos() throws SQLException {
 
         List<Videojuego> listado = new ArrayList<>();
@@ -38,7 +42,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
 
         return listado;
     }
-
+    /**
+     * Metodo para agregar un videojuego pasando un videojuego parametro
+     * Devuelve un entero
+     * Imprime un mensaje por pantalla, si pudo o no ser agregado
+     */
     @Override
     public int agregarVideojuego(Videojuego v) throws SQLException {
         int respuesta = 0;
@@ -69,7 +77,10 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
 
         return respuesta;
     }
-
+    /**
+     * Metodo para buscar un videojuego pasando su ID como parametro
+     * Devuelve un videojuego
+     */
     public Videojuego consultarVideojuegoID(int id) throws SQLException {
         String sql = "SELECT * FROM videojuegos WHERE id=?";
         Videojuego v = null;
@@ -94,7 +105,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         }
         return v;
     }
-
+    /**
+     * Metodo para eliminar un videojuego pasando su ID como parametro
+     * Devuelve un numero, en caso de 0 NO ha sido eliminado
+     * Imprime un mensaje por pantalla si ha sido eliminado
+     */
     public int eliminarVideojuegoPorId(int id) throws SQLException {
         String sql = "DELETE FROM videojuegos WHERE id=?";
         int respuesta = 0;
@@ -112,7 +127,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         }
         return respuesta;
     }
-
+    /**
+     * Metodo para actualizar un videojuego pasando su ID, y los datos nuevos del videojuego por parametro
+     * Devuelve un String
+     * Imprime por pantalla un mensaje si pudo o no ser actualizado
+     */
     public String actualizarVideojuegoPorId(int id, Videojuego videojuego) throws SQLException {
         // Sentencia SQL para actualizar el videojuego en la base de datos
         String sql = "UPDATE videojuegos SET titulo=?, genero=?, plataforma=?, copias_disponibles=? WHERE id=?";
@@ -177,7 +196,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         return listado;
     }
 
-    public List<Videojuego> buscarVideoJuegoNombrePlataforma(String nombre) {
+    /**
+     * Metodo para listar los videojuegos por el titulo
+     * Devuelve una lista de videojuegos
+     */
+    public List<Videojuego> buscarVideoJuegoNombre(String nombre) {
         List<Videojuego> listado = new ArrayList<>();
         String sql = "SELECT * FROM videojuegos WHERE titulo like ?";
 
@@ -205,6 +228,10 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         return listado;
     }
 
+    /**
+     * Metodo para listar los videojuegos de un cliente, pasando su ID por parametro
+     * Devuelve una lista de videojuegos
+     */
     public List<Videojuego> videojuegosPorCliente(int idCliente) {
         List<Videojuego> listado = new ArrayList<>();
         String sql = "SELECT v.id, v.titulo, v.genero, v.plataforma, v.copias_disponibles " +
@@ -234,6 +261,11 @@ public class VideojuegosDAOImpl implements VideojuegosDAO {
         }
         return listado;
     }
+
+    /**
+     * Metodo para listar los videojuegos alquilados pasando el nombre de la plataforma por parametro
+     * Devuelve una lista de videojuegos
+     */
     public List<Videojuego> videojuegosPopularesPlataforma(String plataforma) {
         List<Videojuego> listado = new ArrayList<>();
         String sql = "SELECT v.id, v.titulo, v.genero, v.plataforma, v.copias_disponibles, COUNT(a.videojuego_id) AS num_alquileres " +
