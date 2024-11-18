@@ -1,5 +1,10 @@
 package Modelo;
 
+/**
+ * Clase Videojuego, con metodos Getters, Setters y toString
+ *
+ * @author Jorge Sobrino
+ */
 public class Videojuego {
     private int id;
     private String titulo;
@@ -58,6 +63,7 @@ public class Videojuego {
     public void setCopias_disponibles(int copias_disponibles) {
         this.copias_disponibles = copias_disponibles;
     }
+
 
     @Override
     public String toString() {
