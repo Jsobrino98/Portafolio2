@@ -188,6 +188,9 @@ public class Controlador {
         }
     }
 
+    /**
+     * Introducir los datos de los Alquileres y retorno un Alquiler ya con esos datos
+     */
     private Alquiler datosAlquiler() {
         Alquiler a = new Alquiler();
 
@@ -237,7 +240,7 @@ public class Controlador {
                             vista.obtenerEntero("(Actualizar) Introduce el ID del alquiler: "), obtenerDiaDevolucion()
                     );
                 }
-                case 5 ->{
+                case 5 -> {
                     alquilerDAO.eliminarAlquiler(vista.obtenerEntero("(Eliminar) Introduce el ID del alquiler: "));
                 }
                 case 0 -> volver = true;
@@ -258,48 +261,57 @@ public class Controlador {
             int opcion = vista.obtenerEntero("Opción");
             switch (opcion) {
                 case 1 -> {
-                        List<Videojuego> videojuegos = videojuegosDAO.videojuegosDisponibles();
-                       if (videojuegos.isEmpty()){
-                           vista.mostrarMensaje("No hay videojuegos disponibles");
-                       } else {
-                           for (Videojuego v: videojuegos){
-                               System.out.println(v);
-                           }
-                       }
+                    List<Videojuego> videojuegos = videojuegosDAO.videojuegosDisponibles();
+                    if (videojuegos.isEmpty()) {
+                        vista.mostrarMensaje("No hay videojuegos disponibles");
+                    } else {
+                        for (Videojuego v : videojuegos) {
+                            System.out.println(v);
+                        }
+                    }
 
                 }
                 case 2 -> {
                     List<Videojuego> videojuegos = videojuegosDAO.buscarVideoJuegoNombre(vista.obtenerString("Escribe nombre del Videojuego:"));
-                    if (videojuegos.isEmpty()){
+                    if (videojuegos.isEmpty()) {
                         vista.mostrarMensaje("No hay videojuegos disponibles");
                     } else {
-                        for (Videojuego v: videojuegos){
+                        for (Videojuego v : videojuegos) {
                             System.out.println(v);
                         }
                     }
                 }
                 case 3 -> vista.mostrarMensaje("Opción para ver clientes con más alquileres activos seleccionada.");
-                case 4 ->{
+                case 4 -> {
                     List<Videojuego> videojuegos = videojuegosDAO.videojuegosPorCliente(vista.obtenerEntero("Introduce el ID del cliente: "));
-                    if (videojuegos.isEmpty()){
+                    if (videojuegos.isEmpty()) {
                         vista.mostrarMensaje("No hay videojuegos disponibles");
                     } else {
-                        for (Videojuego v: videojuegos){
+                        for (Videojuego v : videojuegos) {
                             System.out.println(v);
                         }
                     }
                 }
                 case 5 -> {
                     List<Videojuego> videojuegos = videojuegosDAO.videojuegosPopularesPlataforma(vista.obtenerString("Introduce el nombre de la plataforma: "));
-                    if (videojuegos.isEmpty()){
+                    if (videojuegos.isEmpty()) {
                         vista.mostrarMensaje("No hay videojuegos disponibles");
                     } else {
-                        for (Videojuego v: videojuegos){
+                        for (Videojuego v : videojuegos) {
                             System.out.println(v);
                         }
                     }
                 }
-                case 6 -> vista.mostrarMensaje("Opción para Listado de Videojuegos Disponibles para Alquiler");
+                case 6 -> {
+                    List<Videojuego> videojuegos = videojuegosDAO.videojuegosDisponibles();
+                    if (videojuegos.isEmpty()) {
+                        vista.mostrarMensaje("No hay videojuegos disponibles");
+                    } else {
+                        for (Videojuego v : videojuegos) {
+                            System.out.println(v);
+                        }
+                    }
+                }
                 case 7 -> vista.mostrarMensaje("Opción para Historial de Alquileres de un Videojuego Específico");
                 case 0 -> volver = true;
                 default -> vista.mostrarMensaje("Opción no válida. Intentar de nuevo.");
@@ -308,8 +320,7 @@ public class Controlador {
     }
 
     /**
-     * Metodo para obtener fecha de devolucion para
-     * actualizar alquiler
+     * Metodo para obtener fecha de devolucion para actualizar alquiler
      */
     public Date obtenerDiaDevolucion() {
 

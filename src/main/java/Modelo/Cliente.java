@@ -1,22 +1,39 @@
 package Modelo;
 
 import java.sql.Date;
-
+/**
+ * Clase Cliente, con constructores y métodos Getters, Setters y toString
+ *
+ * @author Jorge Sobrino
+ */
 public class Cliente {
     private int id;
     private String nombre;
     private String email;
     private Date fecha_registro;
 
-
+    /**
+     * Constructor vacio de la clase Cliente
+     */
     public Cliente() {}
 
+    /**
+     * Constructor completo de la clase Cliente
+     * @param id
+     * @param nombre
+     * @param email
+     * @param fecha_registro
+     */
     public Cliente(int id, String nombre, String email, Date fecha_registro) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.fecha_registro = fecha_registro;
     }
+
+    /**
+     * Métodos Getters y Setters de la clase
+     */
 
     public int getId() {
         return id;
@@ -50,6 +67,9 @@ public class Cliente {
         this.fecha_registro = fecha_registro;
     }
 
+    /**
+     * Método toString de la clase Cliente
+     */
     @Override
     public String toString() {
         return "🌟✨ Cliente ✨🌟\n" +

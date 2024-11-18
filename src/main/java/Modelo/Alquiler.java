@@ -2,6 +2,11 @@ package Modelo;
 
 import java.sql.Date;
 
+/**
+ * Clase Alquiler, con constructores y métodos Getters, Setters y toString
+ *
+ * @author Jorge Sobrino
+ */
 public class Alquiler {
     private int id;
     private int cliente_id;
@@ -9,14 +14,27 @@ public class Alquiler {
     private Date fecha_alquiler;
     private Date fecha_devolucion;
 
-
+    /**
+     * Constructor vacío de la clase
+     */
     public Alquiler() {
     }
-
+    /**
+     * Constructor con id y fecha de devolucion pasados por parametro
+     */
     public Alquiler(int id, Date fecha_devolucion) {
         this.id = id;
         this.fecha_devolucion = fecha_devolucion;
     }
+
+    /**
+     * Constructor completo de la clase Alquiler
+     * @param id
+     * @param cliente_id
+     * @param videojuego_id
+     * @param fecha_alquiler
+     * @param fecha_devolucion
+     */
 
     public Alquiler(int id, int cliente_id, int videojuego_id, Date fecha_alquiler, Date fecha_devolucion) {
         this.id = id;
@@ -26,7 +44,9 @@ public class Alquiler {
         this.fecha_devolucion = fecha_devolucion;
     }
 
-
+    /**
+     * Métodos Getters y Setters de la clase
+     */
 
     public int getId() {
         return id;
@@ -67,6 +87,10 @@ public class Alquiler {
     public void setFecha_devolucion(Date fecha_devolucion) {
         this.fecha_devolucion = fecha_devolucion;
     }
+
+    /**
+     * Método toString de la clase Alquiler
+     */
 
     @Override
     public String toString() {

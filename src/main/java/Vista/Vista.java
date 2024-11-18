@@ -87,7 +87,7 @@ public class Vista {
         mostrarMensaje("\n========= Informes y Consultas =========");
         mostrarMensaje("Seleccione una opción:");
         mostrarMensaje("1. Listar videojuegos con copias disponibles");
-        mostrarMensaje("2. Buscar videojuegos por título o plataforma");
+        mostrarMensaje("2. Buscar videojuegos por título");
         mostrarMensaje("3. Ver clientes con más alquileres activos");
         mostrarMensaje("4. Listar videojuegos alquilados actualmente por un cliente");
         mostrarMensaje("5. Listar Videojuegos Más Populares por Plataforma");

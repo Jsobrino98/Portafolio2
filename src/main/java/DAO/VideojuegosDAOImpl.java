@@ -7,7 +7,11 @@ import Modelo.Videojuego;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase VideojuegoDAOImpl, con métodos para diferentes funciones dentro del programa
+ *
+ * @author Jorge Sobrino
+ */
 public class VideojuegosDAOImpl implements VideojuegosDAO {
 
     /**

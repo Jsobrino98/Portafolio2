@@ -8,8 +8,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase AlquilerDAOImpl, con constructores y métodos Getters, Setters y toString
+ *
+ * @author Jorge Sobrino
+ */
 public class AlquilerDAOImpl implements AlquilerDAO{
 
+    /**
+     * Metodo para agregar un registro
+     * Pasando un alquiler por parámetro
+     * Devolve un enteiro
+     */
     @Override
     public int registrarAlquiler(Alquiler alquiler) throws SQLException {
         int respuesta = 0;
@@ -49,7 +59,10 @@ public class AlquilerDAOImpl implements AlquilerDAO{
         return respuesta;
     }
 
-
+    /**
+     * Metodo para obter todos os alquileres
+     * Devolve unha lista de alquileres
+     */
     @Override
     public List<Alquiler> obterTodosAlquileres() throws SQLException {
 
@@ -78,6 +91,12 @@ public class AlquilerDAOImpl implements AlquilerDAO{
 
         return listado;
     }
+
+    /**
+     * Metodo para actualizar a fecha de devolución dun alquiler
+     * Pasando un id e unha data de devolución por parametro
+     * Devolve unha resposta en forma de String
+     */
 
     @Override
     public String actualizarAlquilerDevolucion(int idAlquiler, Date devolucion) throws SQLException {
@@ -110,6 +129,11 @@ public class AlquilerDAOImpl implements AlquilerDAO{
         return respuesta;
     }
 
+    /**
+     * Metodo para eliminar un alquiler
+     * Pasando un id por parámetro
+     * Devolve un enteiro
+     */
     @Override
     public int eliminarAlquiler(int id) throws SQLException {
         String sql = "DELETE FROM alquileres WHERE id=?";
@@ -136,7 +160,11 @@ public class AlquilerDAOImpl implements AlquilerDAO{
 
         return respuesta;
     }
-
+    /**
+     * Metodo para consultar un alquiler
+     * Pasando un id por parámetro
+     * Devolve un Alquiler
+     */
     @Override
     public Alquiler consultarAlquilerPorID(int id) throws SQLException {
         String sql = "SELECT * FROM alquileres WHERE id=?";

@@ -1,7 +1,7 @@
 package Modelo;
 
 /**
- * Clase Videojuego, con metodos Getters, Setters y toString
+ * Clase Videojuego, con constructores y métodos Getters, Setters y toString
  *
  * @author Jorge Sobrino
  */
@@ -12,9 +12,14 @@ public class Videojuego {
     private String plataforma;
     private int copias_disponibles;
 
+    /**
+     * Constructor vacío de la clase
+     */
     public Videojuego() {
     }
-
+    /**
+     * Constructor con parámetros de la clase
+     */
     public Videojuego(int id, String titulo, String genero, String plataforma, int copias_disponibles) {
         this.id = id;
         this.titulo = titulo;
@@ -23,7 +28,9 @@ public class Videojuego {
         this.copias_disponibles = copias_disponibles;
     }
 
-
+    /**
+     * Métodos Getters y Setters
+     */
     public int getId() {
         return id;
     }
@@ -64,7 +71,9 @@ public class Videojuego {
         this.copias_disponibles = copias_disponibles;
     }
 
-
+    /**
+     * Método toString
+     */
     @Override
     public String toString() {
         return "╔════════════════════════════════╗\n" +

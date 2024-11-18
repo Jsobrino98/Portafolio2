@@ -8,8 +8,17 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase ClienteDAOImpl, con constructores y métodos Getters, Setters y toString
+ *
+ * @author Jorge Sobrino
+ */
 public class ClienteDAOImpl implements ClienteDAO{
+    /**
+     * Metodo para agregar un cliente
+     * Pasando un cliente por parámetro
+     * Devolve un enteiro
+     */
     @Override
     public int agregarCliente(Cliente c) throws SQLException {
         Date fecha = Date.valueOf(LocalDate.now());
@@ -36,6 +45,11 @@ public class ClienteDAOImpl implements ClienteDAO{
         return respuesta;
     }
 
+    /**
+     * Metodo para consultar un cliente
+     * Pasando un id por parámetro
+     * Devolve un cliente
+     */
     @Override
     public Cliente consultarClienteID(int id) throws SQLException {
         String sql = "SELECT * FROM clientes WHERE id=?";
@@ -60,6 +74,11 @@ public class ClienteDAOImpl implements ClienteDAO{
         }
         return c;
     }
+
+    /**
+     * Metodo para obter todos os clientes
+     * Devolve unha lista de clientes
+     */
 
     @Override
     public List<Cliente> obtenerTodosClientes() throws SQLException {
@@ -87,7 +106,11 @@ public class ClienteDAOImpl implements ClienteDAO{
 
         return listado;
     }
-
+    /**
+     * Método para eliminar un cliente
+     * Pasando un id por parametro
+     * Devolve un enteiro
+     */
     @Override
     public int eliminarClientePorId(int id) throws SQLException {
         String sql = "DELETE FROM clientes WHERE id=?";
@@ -107,6 +130,11 @@ public class ClienteDAOImpl implements ClienteDAO{
         return respuesta;
     }
 
+    /**
+     * Metodo para actualizar un cliente
+     * Pasando un id, e un cliente por parámetro
+     * Devolve unha resposta en forma de String
+     */
     @Override
     public String actualizarClientePorId(int id, Cliente cliente) throws SQLException {
         String sql = "UPDATE clientes SET nombre=?, email=?, fecha_Registro=? WHERE id=?";
